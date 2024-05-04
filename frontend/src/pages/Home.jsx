@@ -2,22 +2,22 @@ import * as React from 'react';
 import { Grid, Typography } from '@mui/material';
 import Card from '../components/Card';
 import ImageSlider from '../components/ImageSlider';
-
+import'./Home.css';
 export default function HomePage() {
   const BestSellers = [
     {
       itemName: 'Tata Masoor Dal',
-      itemDescription: 'Dal / Pulse',
+      itemDescription: 'Rice,Atta, Dal ',
       img: 'https://m.media-amazon.com/images/I/615f7J9S1KL.jpg', 
     },
     {
       itemName: 'Tide Plus',
-      itemDescription: 'Clean Home',
+      itemDescription: 'Cleaning Essentials',
       img: 'https://assets.wakefern.com/is/image/wakefern/3077209164-060?$Mi9Product_detail$',
     },
     {
       itemName: 'Amul Butter',
-      itemDescription: 'Diary',
+      itemDescription: 'Dairy',
       img: 'https://production-uploads-cdn.anar.biz/uploads/image/image/6522684/medium_05849679-4b99-44cb-9ba1-e2c69c9a17f6_1641809095485_photo.png', 
     },
     {
@@ -27,7 +27,7 @@ export default function HomePage() {
     },
     {
       itemName: 'Sunrise Masala Pack',
-      itemDescription: 'Spices',
+      itemDescription: 'Sugar,Salt,Spices',
       img: 'https://spicevariety.com/cdn/shop/files/Machher_Jhol_Masala.jpg?v=1693967272', 
     },
     {
@@ -37,12 +37,12 @@ export default function HomePage() {
     },
     {
       itemName: 'India Gate',
-      itemDescription: 'Rice',
+      itemDescription: 'Rice, Atta,Dal',
       img: 'https://www.arabianbusiness.com/cloud/2021/09/14/ktJ4IL2d-India-Gate-Rice.jpg', 
     },
     {
       itemName: 'Aashirvaad',
-      itemDescription: 'Atta',
+      itemDescription: 'Rice, Atta, Dal',
       img: 'https://rukminim2.flixcart.com/image/850/1000/xif0q/flour/g/l/0/10-m-p-chakki-atta-made-from-100-m-p-wheat-0-maida-1-all-purpose-original-imagpprmeznspnev.jpeg?q=20', 
     }]
 
@@ -59,22 +59,22 @@ export default function HomePage() {
     },
     {
       itemName: 'Tata Gold Tea ',
-      itemDescription: 'Tea',
+      itemDescription: 'Tea, Coffee, Energy Drinks',
       img: 'https://icarus.co.in/uploads/work/TATA-TEA-GOLD-PAGE-22.jpg', 
     },
     {
       itemName: 'Nescafe',
-      itemDescription: 'COffee',
+      itemDescription: 'Tea,Coffee, Energy Drinks',
       img: 'https://img-new.cgtrader.com/items/2032406/9a17660223/large/nescafe-3d-model-obj-mtl-fbx-ma-mb.jpg', 
     },
     {
       itemName: 'Cadbury Dairy Milk',
-      itemDescription: 'Chocolate',
+      itemDescription: 'Snacks',
       img: 'https://wallpapercave.com/wp/wp6274652.jpg', 
     },
     {
       itemName: 'Sprite',
-      itemDescription: 'Drinks',
+      itemDescription: 'Bevarages',
       img: 'https://media.licdn.com/dms/image/D4D12AQH672I_X8LGKg/article-cover_image-shrink_720_1280/0/1706716378118?e=2147483647&v=beta&t=Oxg6CYXC2ZVvJxftTQK-IQ0TFbmlLCiWDoOqabQULDI', 
     },
     {
@@ -84,18 +84,18 @@ export default function HomePage() {
     },
     {
       itemName: 'Tata Salt',
-      itemDescription: 'Salt',
+      itemDescription: 'Sugar,Salt, Spices',
       img: 'https://e0.pxfuel.com/wallpapers/127/820/desktop-wallpaper-effie-tata-logo.jpg', 
     }]
 
     const Browse = [{
       itemName: 'Tata Zero Sugar',
-      itemDescription: 'Sugar',
+      itemDescription: 'Sugar,Salt, Spices',
       img: 'https://i.ytimg.com/vi/CrZAyR7NtT4/maxresdefault.jpg', 
     },
     {
       itemName: 'Denver',
-      itemDescription: 'Body Spray',
+      itemDescription: 'Body Essentials',
       img: 'https://m.media-amazon.com/images/I/61ULoP9ULOL._AC_UF350,350_QL80_.jpg', 
     },
     {
@@ -115,24 +115,22 @@ export default function HomePage() {
     },
     {
       itemName: 'Mangaldeep',
-      itemDescription: 'Agarbati',
+      itemDescription: 'Agarbati & Candles',
       img: 'https://mir-s3-cdn-cf.behance.net/projects/404/05b09b196404703.Y3JvcCw5MDEsNzA0LDAsMzQx.png', 
     },
     {
       itemName: 'Tata Moong Dal',
-      itemDescription: 'Dal / Pulse',
+      itemDescription: 'Rice,Atta,Dal ',
       img: 'https://www.jiomart.com/images/product/original/490830940/tata-sampann-unpolished-moong-dal-1-kg-product-images-o490830940-p490830940-0-202207201859.jpg?im=Resize=(1000,1000)', 
     },
     {
       itemName: 'Lizol',
-      itemDescription: 'Clean Home',
+      itemDescription: 'Cleaning Essentials',
       img: 'https://cdn.shopify.com/s/files/1/0504/8841/0290/products/1_f64f14eb-10bd-4b75-bddd-cc904dbd4eb5_540x.jpg?v=1626087169', 
     },
-    
-    
     {
       itemName: 'Boost',
-      itemDescription: 'Snacks',
+      itemDescription: 'Tea, Coffee, Energy Drinks',
       img: 'https://w0.peakpx.com/wallpaper/867/682/HD-wallpaper-boost-bottle-coca-cola-cold-stone.jpg', 
     },
     {
@@ -150,13 +148,22 @@ export default function HomePage() {
       itemDescription: 'Hair essentials',
       img: 'https://m.media-amazon.com/images/I/61efFnT7A5L._AC_UF1000,1000_QL80_.jpg', 
     },
-    
+    {
+      itemName: 'Pediasure',
+      itemDescription: 'Baby Product',
+      img: 'https://rukminim2.flixcart.com/image/750/900/l0fm07k0/milk-drink-mix/k/l/h/-original-imagc7vzzkz2jpc7.jpeg?q=20', 
+    },
+    {
+      itemName: 'Johnson Baby Shampoo',
+      itemDescription: 'Baby Product',
+      img: 'https://m.media-amazon.com/images/I/51h9GX5t-NL.jpg', 
+    },
   ];
 
   return (
   <>
     <ImageSlider/>
-    <Typography variant="h4" sx={{ fontWeight: 'bold', marginTop: '20px', marginBottom: '10px', backgroundColor: '#f0f0f0', padding: '10px', marginLeft: 3 }}>Best Sellers</Typography>
+    <Typography variant="h4" sx={{ fontWeight: 'bold', marginTop: '20px', marginBottom: '10px', backgroundColor: '#ffffff40', padding: '10px', marginLeft: 3, borderRadius: '50px 0px 0px 50px'  }}>Best Sellers</Typography>
     <Grid container spacing={3} sx={{paddingTop: 1, paddingX: 1}}>
       {BestSellers.map((item, index) => (
         <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
@@ -168,7 +175,7 @@ export default function HomePage() {
         </Grid>
       ))}
     </Grid>
-    <Typography variant="h4" sx={{ fontWeight: 'bold', marginTop: '20px', marginBottom: '10px', backgroundColor: '#f0f0f0', padding: '10px', marginLeft: 3 }}>Recommended</Typography>
+    <Typography variant="h4" sx={{ fontWeight: 'bold', marginTop: '20px', marginBottom: '10px', backgroundColor: '#ffffff40', padding: '10px', marginLeft: 3, borderRadius: '50px 0px 0px 50px'  }}>Recommended</Typography>
     <Grid container spacing={3} sx={{paddingTop: 1, paddingX: 1}}>
       {Recommended.map((item, index) => (
         <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
@@ -180,7 +187,7 @@ export default function HomePage() {
         </Grid>
       ))}
     </Grid>
-    <Typography variant="h4" sx={{ fontWeight: 'bold', marginTop: '20px', marginBottom: '10px', backgroundColor: '#f0f0f0', padding: '10px', marginLeft: 3 }}>Browse More</Typography>
+    <Typography variant="h4" sx={{ fontWeight: 'bold', marginTop: '20px', marginBottom: '10px', backgroundColor: '#ffffff40', padding: '10px', marginLeft: 3, borderRadius: '50px 0px 0px 50px'  }}>Browse More</Typography>
     <Grid container spacing={3} sx={{paddingTop: 1, paddingX: 1}}>
       {Browse.map((item, index) => (
         <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
@@ -192,7 +199,7 @@ export default function HomePage() {
         </Grid>
       ))}
     </Grid>
-     
+
     </>
   );
 }

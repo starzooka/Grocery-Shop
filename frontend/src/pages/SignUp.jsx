@@ -31,6 +31,7 @@ export default function SignUp() {
   const [alertMessage, setAlertMessage] = useState("");
   const [openAlert, setOpenAlert] = useState(false);
   const [successAlert, setSuccessAlert] = useState(false);
+  const [signupSuccess, setSignupSuccess] = useState(false); // New state variable
 
   function isValidEmail(email) {
     return /\S+@\S+\.\S+/.test(email);
@@ -44,72 +45,80 @@ export default function SignUp() {
     return password.length >= 8;
   }
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const firstName = data.get("firstName");
-    const lastName = data.get("lastName");
-    const email = data.get("email");
-    const password = data.get("password");
-    const phoneNumber = data.get("phoneNumber");
-    const agreeTerms = data.get("agreeTerms");
-
+    
+    // Retrieve form data from event target elements
+    const formData = new FormData(event.target);
+    const firstName = formData.get("firstName");
+    const lastName = formData.get("lastName");
+    const email = formData.get("email");
+    const phoneNumber = formData.get("phoneNumber");
+    const password = formData.get("password");
+    const agreeTerms = formData.get("agreeTerms") === "on";
+  
+    // Validate form data
     if (!firstName || !lastName) {
       setAlertMessage("Please enter both your first name and last name.");
       setOpenAlert(true);
       return;
     }
-
+  
     if (!isValidEmail(email)) {
       setAlertMessage("Please enter a valid email address.");
       setOpenAlert(true);
       return;
     }
-
+  
     if (!isValidPassword(password)) {
       setAlertMessage("Password must be at least 8 characters long.");
       setOpenAlert(true);
       return;
     }
-
+  
     if (!isValidPhoneNumber(phoneNumber)) {
       setAlertMessage("Please enter a valid 10-digit phone number.");
       setOpenAlert(true);
       return;
     }
-
+  
     if (!agreeTerms) {
       setAlertMessage("Please agree to the terms and conditions.");
       setOpenAlert(true);
       return;
     }
+  
     try {
-      // Make HTTP POST request to your backend server
-      const response = await axios.post("http://localhost:5000", formData);
-
+      const response = await axios.post("http://localhost:5000/insert", {
+        firstName,
+        lastName,
+        email,
+        phoneNumber,
+        password,
+        agreeTerms,
+      });
+  
       // Handle successful response
       console.log(response.data); // Log response from the server
-
+  
       // Show success alert
       setSuccessAlert(true);
+      setSignupSuccess(true); // Set signup success state to true
+      setTimeout(() => {
+        navigate('/signIn'); // Redirect to sign-in page after a delay
+      }, 3000); // Delay in milliseconds
     } catch (error) {
       // Handle error
       console.error("Error:", error);
-
+  
       // Show error alert
       setAlertMessage("An error occurred while signing up. Please try again later.");
       setOpenAlert(true);
     }
-    // Proceed with sign-up process
-    console.log({
-      firstName,
-      lastName,
-      email,
-      password,
-      phoneNumber,
-    });
-    setSuccessAlert(true);
   };
+  
 
   const handleCloseAlert = () => {
     setOpenAlert(false);
@@ -117,9 +126,10 @@ export default function SignUp() {
 
   return (
     <ThemeProvider theme={createTheme()}>
-      <Container component="main" maxWidth="xs" sx={{  marginTop:8, 
-        paddingBottom: '3rem', border:1.8, 
+      <Container component="main" maxWidth="xs" sx={{  marginTop:'62px', marginBottom:'60px',
+        paddingBottom: '3rem', border:1.8,  backgroundColor: '#ffffff50',
         borderColor:'primary.main', borderRadius:'30px', boxShadow:'1px 1px 5px #1976D2'}}>
+
         <CssBaseline />
         <Box
           sx={{
@@ -243,7 +253,7 @@ export default function SignUp() {
 </Snackbar>
       {/* Success alert */}
       <Snackbar
-        open={successAlert}
+        open={successAlert && signupSuccess} // Conditionally render based on signup success state
         autoHideDuration={6000}
         onClose={handleCloseAlert}
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
@@ -254,7 +264,8 @@ export default function SignUp() {
           onClose={handleCloseAlert}
           severity="success"
         >
-          Form submitted successfully!
+          Form submitted successfully! 
+          Sending You to the Sign-In page.....
         </MuiAlert>
       </Snackbar>
     </ThemeProvider>

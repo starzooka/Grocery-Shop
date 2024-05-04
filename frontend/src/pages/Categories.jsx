@@ -72,6 +72,10 @@ export default function Categories() {
       itemName: 'Clean Home ',
       img: 'https://img.freepik.com/free-photo/clean-kitchen-requires-proper-hygiene-dishwashing-equipment-generated-by-ai_24640-99801.jpg?t=st=1714290873~exp=1714294473~hmac=1c6385de14ea98927913ee836509c312c0a1c2a40a88fe80027cd9319faf98c2&w=1060', // Sample image URL
     },
+    {
+      itemName: 'Vegetables, Fruits',
+      img: 'https://img.freepik.com/free-photo/freshness-nature-bounty-healthy-eating-vegetarian-food-variation-generated-by-artificial-intelligence_25030-60719.jpg?t=st=1714570089~exp=1714573689~hmac=564633bd537b82d40e54357bc0ef379bdf0d39d61cc1c5874d6615ae4f132326&w=1060', // Sample image URL
+    },
   ];
 
   return (

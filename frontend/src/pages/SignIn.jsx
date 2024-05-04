@@ -59,8 +59,9 @@ export default function SignIn() {
   return (
     <ThemeProvider theme={createTheme()}>
       <Container component="main" maxWidth="xs" sx={{  marginTop:'62px', marginBottom:'60px',
-        paddingBottom: '3rem', border:1.8, 
+        paddingBottom: '3rem', border:1.8,  backgroundColor: '#ffffff50',
         borderColor:'primary.main', borderRadius:'30px', boxShadow:'1px 1px 5px #1976D2'}}>
+
         <CssBaseline />
         <Box
           sx={{
