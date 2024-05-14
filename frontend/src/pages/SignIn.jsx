@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -12,12 +13,16 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import { useAuth } from '../AuthContext'; // Update import path as needed
 
+const theme = createTheme();
 
 export default function SignIn() {
   const [openAlert, setOpenAlert] = React.useState(false);
   const [alertMessage, setAlertMessage] = React.useState("");
-  const [successAlert, setSuccessAlert] = React.useState(false); // State for success alert
+  const [successAlert, setSuccessAlert] = React.useState(false);
+  const { signIn } = useAuth(); // Use the signIn function from AuthContext
+  const navigate = useNavigate(); // Use navigate to redirect the user
 
   function isValidEmail(email) {
     return /\S+@\S+\.\S+/.test(email);
@@ -27,7 +32,7 @@ export default function SignIn() {
     return password.length >= 8;
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const email = data.get("email");
@@ -45,23 +50,58 @@ export default function SignIn() {
       return;
     }
 
-    console.log({
-      email,
-      password,
-    });
-    setSuccessAlert(true);
+    try {
+      const response = await fetch("http://localhost:5000/signin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const result = await response.json();
+      console.log(result);
+
+      if (result.message === "Sign in successful") {
+        signIn(); // Call signIn to update the authentication state
+        setSuccessAlert(true);
+        setAlertMessage("Signed in successfully!");
+        setTimeout(() => navigate('/'), 1000); // Redirect to home after a short delay
+      } else {
+        throw new Error("Sign in failed");
+      }
+    } catch (error) {
+      console.error("There was a problem with your fetch operation:", error);
+      setAlertMessage("Credentials are invalid.");
+      setOpenAlert(true);
+    }
   };
 
   const handleCloseAlert = () => {
     setOpenAlert(false);
+    setSuccessAlert(false);
   };
 
   return (
-    <ThemeProvider theme={createTheme()}>
-      <Container component="main" maxWidth="xs" sx={{  marginTop:'62px', marginBottom:'60px',
-        paddingBottom: '3rem', border:1.8,  backgroundColor: '#ffffff50',
-        borderColor:'primary.main', borderRadius:'30px', boxShadow:'1px 1px 5px #1976D2'}}>
-
+    <ThemeProvider theme={theme}>
+      <Container
+        component="main"
+        maxWidth="xs"
+        sx={{
+          marginTop: "62px",
+          marginBottom: "60px",
+          paddingBottom: "3rem",
+          border: 1.8,
+          backgroundColor: "#ffffff50",
+          borderColor: "primary.main",
+          borderRadius: "30px",
+          boxShadow: "1px 1px 5px #1976D2",
+        }}
+      >
         <CssBaseline />
         <Box
           sx={{
@@ -131,18 +171,14 @@ export default function SignIn() {
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
       >
         <MuiAlert
-    elevation={6}
-    variant="filled"
-    onClose={handleCloseAlert}
-    severity="error"
-    sx={{
-      marginRight: '10px',
-      marginTop: '60px'
-    }
-    }
-  >
-    {alertMessage}
-  </MuiAlert>
+          elevation={6}
+          variant="filled"
+          onClose={handleCloseAlert}
+          severity="error"
+          sx={{ marginRight: "10px", marginTop: "60px" }}
+        >
+          {alertMessage}
+        </MuiAlert>
       </Snackbar>
       <Snackbar
         open={successAlert}
@@ -156,7 +192,7 @@ export default function SignIn() {
           onClose={handleCloseAlert}
           severity="success"
         >
-          Signed in successfully!
+          {alertMessage}
         </MuiAlert>
       </Snackbar>
     </ThemeProvider>

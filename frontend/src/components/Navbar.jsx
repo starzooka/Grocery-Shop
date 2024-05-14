@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { AppBar, Toolbar, IconButton, Typography, Button, Box, Menu, MenuItem, MenuList } from '@mui/material';
+import { AppBar, Toolbar, IconButton, Typography, Button, Box } from '@mui/material';
 import StoreSharpIcon from '@mui/icons-material/StoreSharp';
-import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import HomeIcon from '@mui/icons-material/Home';
@@ -9,6 +8,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CategoryIcon from '@mui/icons-material/Category';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Searchbar from './searchbar';
+import { useAuth } from '../AuthContext'; // Update import path as needed
 
 const themeNav = createTheme({
   palette: {
@@ -22,61 +22,47 @@ const themeNav = createTheme({
       light: '#4CAF50',
       main: '#fefefe',
       dark: '#4CAF50',
-      contrastText: '#000000', // Text color is dark
+      contrastText: '#000000',
     },
   },
   gradient: {
-    main:  'linear-gradient(135deg,#CAF00A   30%, #05BB47 90%)', // Adjust gradient colors
+    main: 'linear-gradient(135deg,#CAF00A 30%, #05BB47 90%)',
   },
 });
 
 export default function Navbar() {
   const [selectedButton, setSelectedButton] = useState(null);
-  const [anchorNav, setAnchorNav] = useState(null);
+  const { isAuthenticated, signOut } = useAuth();
 
-  const openMenu = (event) => {
-    setAnchorNav(event.currentTarget);
-  };
-  const closeMenu = () => {
-    setAnchorNav(null);
-  };
 
   const handleButtonClick = (buttonName) => {
     setSelectedButton(buttonName);
+  };
+
+  const handleSignOut = () => {
+    signOut();
+    handleButtonClick(null);
   };
 
   return (
     <div>
       <ThemeProvider theme={themeNav}>
         <AppBar position="static" sx={{ background: themeNav.gradient.main }}>
-          {/* Apply gradient background */}
           <Toolbar>
-            <IconButton
-              size="large"
-              color="inherit"
-              edge="start"
-              aria-label="logo"
-              sx={{ display: { xs: 'none', md: 'flex' } }}
-            >
+            <IconButton size="large" color="inherit" edge="start" aria-label="logo">
               <StoreSharpIcon />
             </IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               GREEN MART
             </Typography>
             <Searchbar />
-            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+            <Box>
               <Link to="/">
                 <Button
                   color="secondary"
                   sx={{
-                    transition: 'all 0.3s ease',
                     backgroundColor: selectedButton === 'home' ? '#01682A ' : 'transparent',
                     color: selectedButton === 'home' ? '#FFFFFF' : '#FFFFFF',
-                    '&:hover': {
-                      backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                      color: '#FFFFFF',
-                      transform: 'scale(1.05)',
-                    },
                   }}
                   onClick={() => handleButtonClick('home')}
                 >
@@ -88,14 +74,8 @@ export default function Navbar() {
                 <Button
                   color="secondary"
                   sx={{
-                    transition: 'all 0.3s ease',
                     backgroundColor: selectedButton === 'categories' ? '#01682A' : 'transparent',
                     color: selectedButton === 'categories' ? '#FFFFFF' : '#FFFFFF',
-                    '&:hover': {
-                      backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                      color: '#FFFFFF',
-                      transform: 'scale(1.05)',
-                    },
                   }}
                   onClick={() => handleButtonClick('categories')}
                 >
@@ -107,14 +87,8 @@ export default function Navbar() {
                 <Button
                   color="secondary"
                   sx={{
-                    transition: 'all 0.3s ease',
                     backgroundColor: selectedButton === 'cart' ? '#01682A' : 'transparent',
                     color: selectedButton === 'cart' ? '#FFFFFF' : '#FFFFFF',
-                    '&:hover': {
-                      backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                      color: '#FFFFFF',
-                      transform: 'scale(1.05)',
-                    },
                   }}
                   onClick={() => handleButtonClick('cart')}
                 >
@@ -126,14 +100,8 @@ export default function Navbar() {
                 <Button
                   color="secondary"
                   sx={{
-                    transition: 'all 0.3s ease',
                     backgroundColor: selectedButton === 'account' ? '#01682A' : 'transparent',
                     color: selectedButton === 'account' ? '#FFFFFF' : '#FFFFFF',
-                    '&:hover': {
-                      backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                      color: '#FFFFFF',
-                      transform: 'scale(1.05)',
-                    },
                   }}
                   onClick={() => handleButtonClick('account')}
                 >
@@ -141,73 +109,33 @@ export default function Navbar() {
                   My Account
                 </Button>
               </Link>
-              <Link to="/signIn">
+              {isAuthenticated && (
                 <Button
                   color="secondary"
+                  onClick={handleSignOut}
                   sx={{
-                    transition: 'all 0.3s ease',
-                    backgroundColor: selectedButton === 'signIn' ? '#01682A' : 'transparent',
-                    color: selectedButton === 'signIn' ? '#FFFFFF' : '#FFFFFF',
-                    '&:hover': {
-                      backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                      color: '#FFFFFF',
-                      transform: 'scale(1.05)',
-                    },
+                    backgroundColor: selectedButton === 'signOut' ? '#01682A' : 'transparent',
+                    color: selectedButton === 'signOut' ? '#FFFFFF' : '#FFFFFF',
                   }}
-                  onClick={() => handleButtonClick('signIn')}
                 >
-                  SIGN IN
+                  SIGN OUT
                 </Button>
-              </Link>
+              )}
+              {!isAuthenticated && (
+                <Link to="/signIn">
+                  <Button
+                    color="secondary"
+                    sx={{
+                      backgroundColor: selectedButton === 'signIn' ? '#01682A' : 'transparent',
+                      color: selectedButton === 'signIn' ? '#FFFFFF' : '#FFFFFF',
+                    }}
+                    onClick={() => handleButtonClick('signIn')}
+                  >
+                    SIGN IN
+                  </Button>
+                </Link>
+              )}
             </Box>
-            <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-              <IconButton size="large" edge="start" color="inherit" onClick={openMenu}>
-                <MenuIcon />
-              </IconButton>
-              <Menu open={Boolean(anchorNav)} onClose={closeMenu} anchorEl={anchorNav} sx={{ display: { xs: 'flex', md: 'none' } }}>
-                <MenuList>
-                  <Link to="/home">
-                    <MenuItem>
-                      <HomeIcon />
-                      HOME
-                    </MenuItem>
-                  </Link>
-                  <Link to="/categories">
-                    <MenuItem>
-                      <CategoryIcon />
-                      Categories
-                    </MenuItem>
-                  </Link>
-                  <Link to="/mycart">
-                    <MenuItem>
-                      <ShoppingCartIcon />
-                      My cart
-                    </MenuItem>
-                  </Link>
-                  <Link to="/about">
-                    <MenuItem>
-                      <AccountCircleIcon />
-                      My Account
-                    </MenuItem>
-                  </Link>
-                  <Link to="/signIn">
-                    <MenuItem>SIGN IN</MenuItem>
-                  </Link>
-                </MenuList>
-              </Menu>
-            </Box>
-            <IconButton
-              size="large"
-              color="inherit"
-              edge="start"
-              aria-label="logo"
-              sx={{ display: { xs: 'flex', md: 'none' } }}
-            >
-              <StoreSharpIcon />
-            </IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-              Inventory Master
-            </Typography>
           </Toolbar>
         </AppBar>
       </ThemeProvider>
