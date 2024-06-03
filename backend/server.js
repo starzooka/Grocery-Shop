@@ -1,27 +1,16 @@
 require('dotenv').config();
+
 const express = require("express");
 const cors = require("cors");
-const session = require('express-session');
-const KnexSessionStore = require('connect-session-knex')(session);
-const knex = require('knex')({
-  client: 'mysql2',
-  connection: {
-    host: process.env.HOST,
-    user: process.env.USER,
-    password: process.env.PASSWORD,
-    database: process.env.DATABASE,
-  }
-});
-
-const store = new KnexSessionStore({
-  knex,
-  tablename: 'sessions'
-});
+const mysql = require('mysql2/promise');
 
 const app = express();
 
 const insertRouter = require("./routes/insert");
 const signInRouter = require("./routes/signin");
+const accountRouter = require("./routes/account");
+const productsRouter = require("./routes/products"); // Import the products route
+const cartRouter = require("./routes/cart"); // Import the cart route
 
 // Middleware to parse JSON request bodies
 app.use(express.json());
@@ -29,17 +18,21 @@ app.use(express.json());
 // Enable CORS for all routes
 app.use(cors());
 
-// Session middleware
-app.use(session({
-  secret: process.env.SESSION_SECRET || 'your_secret_key',
-  resave: false,
-  saveUninitialized: false,
-  store: store,
-  cookie: { maxAge: 1000 * 60 * 60 * 24 } // 1 day
-}));
+const createConnection = async () => {
+  const db = await mysql.createConnection({
+    host: process.env.HOST,
+    user: process.env.USER,
+    password: process.env.PASSWORD,
+    database: process.env.DATABASE,
+  });
+  return db;
+};
 
 app.use('/insert', insertRouter);
 app.use('/signin', signInRouter);
+app.use('/account', accountRouter);
+app.use('/products', productsRouter); // Use the products route
+app.use('/cart', cartRouter); // Use the cart route
 
 // Add more routes and middleware as needed for future functionalities
 

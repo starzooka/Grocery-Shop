@@ -27,10 +27,16 @@ router.post('/', async (req, res) => {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
 
-    req.session.userId = user.id;
-    req.session.email = user.email;
+    // Sending user data back to the client
+    const userData = {
+      id: user.user_id,
+      email: user.email,
+      firstName: user.first_name,
+      lastName: user.last_name,
+      phoneNumber: user.phone_number
+    };
 
-    return res.status(200).json({ message: 'Sign in successful' });
+    return res.status(200).json({ message: 'Sign in successful', user: userData });
   } catch (error) {
     console.error('Sign in error:', error);
     return res.status(500).json({ message: 'Internal server error' });
