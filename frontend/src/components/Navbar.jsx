@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { AppBar, Toolbar, IconButton, Typography, Button, Box } from '@mui/material';
-import StoreSharpIcon from '@mui/icons-material/StoreSharp';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { AppBar, Toolbar, Typography, Button, Box } from '@mui/material';
+import { Link, useNavigate } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import HomeIcon from '@mui/icons-material/Home';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CategoryIcon from '@mui/icons-material/Category';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Searchbar from './searchbar';
-import { useAuth } from '../AuthContext'; // Update import path as needed
+import LogoImage from './NAVBARlogO.png';
+import SearchResultsList from './SearchResultsList.jsx';
 
 const themeNav = createTheme({
   palette: {
@@ -32,15 +32,26 @@ const themeNav = createTheme({
 
 export default function Navbar() {
   const [selectedButton, setSelectedButton] = useState(null);
-  const { isAuthenticated, signOut } = useAuth();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [results, setResults] = useState([]);
 
+  useEffect(() => {
+    const userData = JSON.parse(sessionStorage.getItem("userData"));
+    setIsAuthenticated(!!userData);
+  }, []);
+
+  const navigate = useNavigate();
 
   const handleButtonClick = (buttonName) => {
     setSelectedButton(buttonName);
   };
 
   const handleSignOut = () => {
-    signOut();
+    sessionStorage.removeItem("email");
+    sessionStorage.removeItem("userData");
+    setIsAuthenticated(false);
+    navigate("/");
+    window.location.reload();
     handleButtonClick(null);
   };
 
@@ -49,20 +60,25 @@ export default function Navbar() {
       <ThemeProvider theme={themeNav}>
         <AppBar position="static" sx={{ background: themeNav.gradient.main }}>
           <Toolbar>
-            <IconButton size="large" color="inherit" edge="start" aria-label="logo">
-              <StoreSharpIcon />
-            </IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              GREEN MART
+            <img src={LogoImage} alt="Logo" style={{ height: '40px', marginRight: '10px' }} />
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+              <b><i>GREEN MART</i></b>
             </Typography>
-            <Searchbar />
+            <div className="search-bar-container" style={{ position: 'relative', marginRight: '100px' }}>
+              <Searchbar setResults={setResults} />
+              {results && results.length > 0 && (
+                <div style={{ position: 'absolute', top: '100%', left: 0, width: '100%' }}>
+                  <SearchResultsList results={results} />
+                </div>
+              )}
+            </div>
             <Box>
               <Link to="/">
                 <Button
                   color="secondary"
                   sx={{
-                    backgroundColor: selectedButton === 'home' ? '#01682A ' : 'transparent',
-                    color: selectedButton === 'home' ? '#FFFFFF' : '#FFFFFF',
+                    backgroundColor: selectedButton === 'home' ? '#01682A' : 'transparent',
+                    color: '#FFFFFF',
                   }}
                   onClick={() => handleButtonClick('home')}
                 >
@@ -75,7 +91,7 @@ export default function Navbar() {
                   color="secondary"
                   sx={{
                     backgroundColor: selectedButton === 'categories' ? '#01682A' : 'transparent',
-                    color: selectedButton === 'categories' ? '#FFFFFF' : '#FFFFFF',
+                    color: '#FFFFFF',
                   }}
                   onClick={() => handleButtonClick('categories')}
                 >
@@ -88,7 +104,7 @@ export default function Navbar() {
                   color="secondary"
                   sx={{
                     backgroundColor: selectedButton === 'cart' ? '#01682A' : 'transparent',
-                    color: selectedButton === 'cart' ? '#FFFFFF' : '#FFFFFF',
+                    color: '#FFFFFF',
                   }}
                   onClick={() => handleButtonClick('cart')}
                 >
@@ -101,7 +117,7 @@ export default function Navbar() {
                   color="secondary"
                   sx={{
                     backgroundColor: selectedButton === 'account' ? '#01682A' : 'transparent',
-                    color: selectedButton === 'account' ? '#FFFFFF' : '#FFFFFF',
+                    color: '#FFFFFF',
                   }}
                   onClick={() => handleButtonClick('account')}
                 >
@@ -109,25 +125,24 @@ export default function Navbar() {
                   My Account
                 </Button>
               </Link>
-              {isAuthenticated && (
+              {isAuthenticated ? (
                 <Button
                   color="secondary"
                   onClick={handleSignOut}
                   sx={{
                     backgroundColor: selectedButton === 'signOut' ? '#01682A' : 'transparent',
-                    color: selectedButton === 'signOut' ? '#FFFFFF' : '#FFFFFF',
+                    color: '#FFFFFF',
                   }}
                 >
                   SIGN OUT
                 </Button>
-              )}
-              {!isAuthenticated && (
+              ) : (
                 <Link to="/signIn">
                   <Button
                     color="secondary"
                     sx={{
                       backgroundColor: selectedButton === 'signIn' ? '#01682A' : 'transparent',
-                      color: selectedButton === 'signIn' ? '#FFFFFF' : '#FFFFFF',
+                      color: '#FFFFFF',
                     }}
                     onClick={() => handleButtonClick('signIn')}
                   >

@@ -13,7 +13,6 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-import { useAuth } from '../AuthContext'; // Update import path as needed
 
 const theme = createTheme();
 
@@ -21,9 +20,10 @@ export default function SignIn() {
   const [openAlert, setOpenAlert] = React.useState(false);
   const [alertMessage, setAlertMessage] = React.useState("");
   const [successAlert, setSuccessAlert] = React.useState(false);
-  const { signIn } = useAuth(); // Use the signIn function from AuthContext
   const navigate = useNavigate(); // Use navigate to redirect the user
-
+  const handleRefresh=()=>{
+    window.location.reload();
+  }
   function isValidEmail(email) {
     return /\S+@\S+\.\S+/.test(email);
   }
@@ -59,23 +59,36 @@ export default function SignIn() {
         body: JSON.stringify({ email, password }),
       });
 
+      const responseData = await response.json();
+
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        throw new Error(responseData.message || "Sign in failed");
       }
 
-      const result = await response.json();
-      console.log(result);
+      const { message, user } = responseData;
 
-      if (result.message === "Sign in successful") {
-        signIn(); // Call signIn to update the authentication state
+      if (message === "Sign in successful") {
         setSuccessAlert(true);
         setAlertMessage("Signed in successfully!");
-        setTimeout(() => navigate('/'), 1000); // Redirect to home after a short delay
+        
+        // Storing user data in sessionStorage
+        const userData = {
+          id: user.id,
+          email: user.email,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          phoneNumber: user.phoneNumber
+        };
+        sessionStorage.setItem("userData", JSON.stringify(userData));
+        console.log(JSON.stringify(userData))
+        // Redirect to home after a short delay
+        navigate('/'); 
+        handleRefresh();
       } else {
         throw new Error("Sign in failed");
       }
     } catch (error) {
-      console.error("There was a problem with your fetch operation:", error);
+      console.error("Sign in error:", error);
       setAlertMessage("Credentials are invalid.");
       setOpenAlert(true);
     }

@@ -8,7 +8,7 @@ import MyCart from './pages/MyCart';
 import Categories from './pages/Categories';
 import MyAccount from './pages/MyAccount';
 import { Footer } from './components/footer';
-import { AuthProvider } from './AuthContext';
+import ShowProduct from './components/ShowProduct';
 
 function App() {
   const router = createBrowserRouter([
@@ -18,7 +18,7 @@ function App() {
         <>
           <Navbar />
           <Home />
-          <Footer />
+           
         </>
       ),
     },
@@ -28,7 +28,7 @@ function App() {
         <>
           <Navbar />
           <SignIn />
-          <Footer />
+           
         </>
       ),
     },
@@ -38,7 +38,7 @@ function App() {
         <>
           <Navbar />
           <SignUp />
-          <Footer />
+           
         </>
       ),
     },
@@ -48,7 +48,7 @@ function App() {
         <>
           <Navbar />
           <MyCart />
-          <Footer />
+           
         </>
       ),
     },
@@ -58,7 +58,7 @@ function App() {
         <>
           <Navbar />
           <Categories />
-          <Footer />
+           
         </>
       ),
     },
@@ -68,16 +68,27 @@ function App() {
         <>
           <Navbar />
           <MyAccount />
-          <Footer />
+           
         </>
       ),
     },
+    {
+      path: '/product',
+      element: (
+        <>
+          <Navbar />
+          <ShowProduct />
+           
+        </>
+      ),
+    }
   ]);
 
   return (
-    <AuthProvider>
+    <>
       <RouterProvider router={router} />
-    </AuthProvider>
+      <Footer/>
+      </>
   );
 }
 
