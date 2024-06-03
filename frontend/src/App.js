@@ -9,7 +9,7 @@ import Categories from './pages/Categories';
 import MyAccount from './pages/MyAccount';
 import { Footer } from './components/footer';
 import ShowProduct from './components/ShowProduct';
-
+import MyOrders from './pages/myOrders';
 function App() {
   const router = createBrowserRouter([
     {
@@ -18,7 +18,7 @@ function App() {
         <>
           <Navbar />
           <Home />
-           
+          <Footer/>
         </>
       ),
     },
@@ -28,7 +28,7 @@ function App() {
         <>
           <Navbar />
           <SignIn />
-           
+          <Footer/>
         </>
       ),
     },
@@ -38,7 +38,7 @@ function App() {
         <>
           <Navbar />
           <SignUp />
-           
+          <Footer/>
         </>
       ),
     },
@@ -58,7 +58,7 @@ function App() {
         <>
           <Navbar />
           <Categories />
-           
+          <Footer/>
         </>
       ),
     },
@@ -68,7 +68,7 @@ function App() {
         <>
           <Navbar />
           <MyAccount />
-           
+          <Footer/>
         </>
       ),
     },
@@ -78,7 +78,17 @@ function App() {
         <>
           <Navbar />
           <ShowProduct />
-           
+          <Footer/>
+        </>
+      ),
+    },
+    {
+      path: '/myOrders',
+      element: (
+        <>
+          <Navbar />
+          <MyOrders/>
+          <Footer/>
         </>
       ),
     }
@@ -87,7 +97,7 @@ function App() {
   return (
     <>
       <RouterProvider router={router} />
-      <Footer/>
+      
       </>
   );
 }

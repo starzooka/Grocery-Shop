@@ -65,6 +65,10 @@ export default function ProfilePage() {
     // Handle profile picture change
   };
 
+  const handleMyOrders = () => {
+    navigate('/myOrders');
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -77,16 +81,18 @@ export default function ProfilePage() {
       >
         <Box
           sx={{
-            width: '300px',
+            width: '800px',
+            height: '400px',
             borderRadius: '8px',
             boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
             background: 'linear-gradient(135deg, #E2EADF 30%, #ABDADA 90%)',
             padding: '20px',
+            margin: '20px', // Adjust margin here
+            position: 'relative',
           }}
         >
           <Avatar sx={{ width: 100, height: 100, background: '#487CB6' }} src={profilePicture}>
-            {/* Display first letter of email if no profile picture */}
-            {profilePicture ? null : email.charAt(0).toUpperCase()}
+            {profilePicture ? null : firstName.charAt(0).toUpperCase()}
           </Avatar>
           {isEditing ? (
             <Box sx={{ marginTop: '20px' }}>
@@ -140,16 +146,21 @@ export default function ProfilePage() {
               </Box>
             </Box>
           ) : (
-            <Box sx={{ marginTop: '20px' }}>
-              <Typography variant="h6" align="center">
+            <Box sx={{ marginTop: '20px', textAlign: 'left' }}>
+              <Typography variant="h6">
                 <b>{firstName} {lastName}</b>
               </Typography>
-              <Typography variant="body1" align="center">{email}</Typography>
-              <Typography variant="body1" align="center">{address}</Typography>
-              <Typography variant="body1" align="center">{phoneNumber}</Typography>
+              <Typography variant="body1">Email: {email}</Typography>
+              <Typography variant="body1">Address: {address}</Typography>
+              <Typography variant="body1">Phone Number: {phoneNumber}</Typography>
               <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
                 <Button onClick={handleEditProfile} variant="contained" color="primary">
                   Edit Profile
+                </Button>
+              </Box>
+              <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px' }}>
+                <Button onClick={handleMyOrders} variant="contained" color="primary">
+                  My Orders
                 </Button>
               </Box>
             </Box>
