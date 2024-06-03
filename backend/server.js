@@ -11,7 +11,7 @@ const signInRouter = require("./routes/signin");
 const accountRouter = require("./routes/account");
 const productsRouter = require("./routes/products"); // Import the products route
 const cartRouter = require("./routes/cart"); // Import the cart route
-
+const orderRouter = require("./routes/order");
 // Middleware to parse JSON request bodies
 app.use(express.json());
 
@@ -33,7 +33,7 @@ app.use('/signin', signInRouter);
 app.use('/account', accountRouter);
 app.use('/products', productsRouter); // Use the products route
 app.use('/cart', cartRouter); // Use the cart route
-
+app.use('/order', orderRouter);
 // Add more routes and middleware as needed for future functionalities
 
 // Start the server

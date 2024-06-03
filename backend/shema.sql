@@ -54,3 +54,32 @@ VALUES
 -- Products for the 'Edible Oils' category (category_id 5)
 ('Olive Oil', 8.99, 'Extra virgin olive oil, 1 liter', 'olive_oil.jpg', 5),
 ('Sunflower Oil', 7.50, 'Refined sunflower oil, 1 liter', 'sunflower_oil.jpg', 5);
+
+
+CREATE TABLE cart (
+    cart_id INT PRIMARY KEY AUTO_INCREMENT,
+    product_id INT NOT NULL,
+    user_id INT NOT NULL,
+    product_quantity INT NOT NULL,
+    FOREIGN KEY (product_id) REFERENCES products(id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+CREATE TABLE orders (
+    order_id int PRIMARY KEY AUTO_INCREMENT,
+    user_id INT,
+    total_amount DECIMAL(10,2),
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+
+create table order_det (
+    order_id int,
+    user_id INT,
+    product_id int,
+    product_quantity int,
+    item_total int,
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (product_id) REFERENCES products(id),
+    FOREIGN KEY (order_id) REFERENCES orders(order_id)
+);
