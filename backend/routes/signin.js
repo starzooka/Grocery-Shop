@@ -33,7 +33,8 @@ router.post('/', async (req, res) => {
       email: user.email,
       firstName: user.first_name,
       lastName: user.last_name,
-      phoneNumber: user.phone_number
+      phoneNumber: user.phone_number,
+      address: user.address
     };
 
     return res.status(200).json({ message: 'Sign in successful', user: userData });

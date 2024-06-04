@@ -49,4 +49,28 @@ router.get('/fetchByName', async (req, res) => {
   }
 });
 
+
+router.get('/fetchByCategory', async (req, res) => {
+  const productCategory = req.query.category_id;
+  if (!productCategory) {
+    return res.status(400).json({ message: 'Category is required' });
+  }
+
+  try {
+    const db = await createConnection();
+    const [rows] = await db.execute('SELECT * FROM products WHERE category_id = ?', [productCategory]);
+    await db.end();
+
+    if (rows.length === 0) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    res.json(rows); // Assuming you want to return a single product object
+  } catch (error) {
+    console.error('Error fetching product:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
+
 module.exports = router;
