@@ -146,7 +146,7 @@ function ShowProduct() {
                                 <Box className="product-details" sx={{ flex: 1, marginRight: '20px' }}>
                                     <h2>Product Details</h2>
                                     <p><strong>Name:</strong> {product.name}</p>
-                                    <p><strong>Price:</strong> Rs. {product.price}</p>
+                                    <p><strong>Price:</strong> Rs. {product.price} per unit</p>
                                     <p><strong>Description:</strong> {product.description}</p>
                                 </Box>
                                 <Box sx={{ flexShrink: 0 }}>

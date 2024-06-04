@@ -30,6 +30,9 @@ function MyCart() {
     async function fetchCartItems() {
       try {
         const userData = JSON.parse(sessionStorage.getItem("userData"));
+        if(!userData){
+          navigate('/signIn');
+        }
         const userId = userData.id;
         const response = await fetch(`http://localhost:5000/cart/${userId}`);
 

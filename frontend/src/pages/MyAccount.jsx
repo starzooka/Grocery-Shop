@@ -36,6 +36,7 @@ export default function ProfilePage() {
 
   useEffect(() => {
     const userData = JSON.parse(sessionStorage.getItem('userData'));
+    console.log(userData)
     if (userData) {
       setIsAuthenticated(true);
       setFirstName(userData.firstName);

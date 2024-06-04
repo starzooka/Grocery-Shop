@@ -99,7 +99,9 @@ export default function Navbar() {
                   Categories
                 </Button>
               </Link>
-              <Link to="/myCart">
+              
+              {isAuthenticated ? (<>
+<Link to="/myCart">
                 <Button
                   color="secondary"
                   sx={{
@@ -125,7 +127,6 @@ export default function Navbar() {
                   My Account
                 </Button>
               </Link>
-              {isAuthenticated ? (
                 <Button
                   color="secondary"
                   onClick={handleSignOut}
@@ -136,6 +137,7 @@ export default function Navbar() {
                 >
                   SIGN OUT
                 </Button>
+                  </>
               ) : (
                 <Link to="/signIn">
                   <Button

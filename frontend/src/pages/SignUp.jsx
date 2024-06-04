@@ -55,6 +55,7 @@ export default function SignUp() {
     const firstName = formData.get("firstName");
     const lastName = formData.get("lastName");
     const email = formData.get("email");
+    const address = formData.get("address");
     const phoneNumber = formData.get("phoneNumber");
     const password = formData.get("password");
     const agreeTerms = formData.get("agreeTerms") === "on";
@@ -95,6 +96,7 @@ export default function SignUp() {
         firstName,
         lastName,
         email,
+        address,
         phoneNumber,
         password,
         agreeTerms,
@@ -181,6 +183,16 @@ export default function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="address"
+                  label="Full Address"
+                  name="address"
+                  autoComplete="address"
                 />
               </Grid>
               <Grid item xs={12}>

@@ -5,10 +5,17 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { useNavigate } from 'react-router-dom';
+
+
 
 const MediaCard = (props) => {
-  const { img, itemName, itemDescription, price } = props;
+  const navigate=useNavigate();
 
+  const { img, itemName, itemId, price } = props;
+  function handleRefresh(){
+    window.location.reload();
+  }
   const cardStyle = {
     maxWidth: 345,
     transition: 'transform 0.3s',
@@ -20,7 +27,7 @@ const MediaCard = (props) => {
     margin: '16px',
     background: 'linear-gradient(135deg, #ACF75C 30%, #05BB47 90%)' // Updated gradient color to yellowish
   };
-
+  
   const mediaStyle = {
     height: 250,
     borderTopLeftRadius: '8px',
@@ -30,7 +37,7 @@ const MediaCard = (props) => {
   const actionsStyle = {
     justifyContent: 'space-between',
   };
-
+  
   const buttonStyle = {
     color: 'black', // Text color
     fontWeight: 'bold', // Font weight
@@ -51,20 +58,25 @@ const MediaCard = (props) => {
     fontWeight: 'bold', // Font weight
     color: '#000000', // Text color
   };
-
+  
   const descriptionStyle = {
     fontFamily: 'Arial, sans-serif', // Font family
     fontSize: '1rem', // Font size
     color: '#333', // Text color
   };
-
+  
   const priceStyle = {
     fontFamily: 'Arial, sans-serif', // Font family
     fontSize: '1.1rem', // Font size
     fontWeight: 'bold', // Font weight
     color: '#000000', // Text color
   };
-
+  
+  const handleCategory = (itemId) => {
+    navigate('/productList', { state: { category_id : itemId } });
+    // handleRefresh();
+  };
+  
   return (
     <Card sx={cardStyle}>
       <CardMedia
@@ -75,15 +87,10 @@ const MediaCard = (props) => {
         <Typography gutterBottom variant="h5" component="div" sx={titleStyle}>
           {itemName}
         </Typography>
-        <Typography variant="body2" color="text.secondary" sx={descriptionStyle}>
-          {itemDescription}
-        </Typography>
-        {/* <Typography variant="body2" color="text.primary" sx={priceStyle}>
-          Price: ${price}
-        </Typography> */}
+        
       </CardContent>
       <CardActions sx={actionsStyle}>
-        <Button size="small" sx={buttonStyle}>Show More</Button>
+        <Button size="small" sx={buttonStyle} onClick={()=>handleCategory(itemId)}>Show More</Button>
         {/* <Button size="small" sx={buttonStyle}>Add to cart</Button> */}
       </CardActions>
     </Card>

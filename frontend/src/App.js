@@ -10,6 +10,7 @@ import MyAccount from './pages/MyAccount';
 import { Footer } from './components/footer';
 import ShowProduct from './components/ShowProduct';
 import MyOrders from './pages/myOrders';
+import ProductList from './pages/productList';
 function App() {
   const router = createBrowserRouter([
     {
@@ -88,6 +89,16 @@ function App() {
         <>
           <Navbar />
           <MyOrders/>
+          <Footer/>
+        </>
+      ),
+    },
+    {
+      path: '/productList',
+      element: (
+        <>
+          <Navbar />
+          <ProductList/>
           <Footer/>
         </>
       ),

@@ -77,7 +77,8 @@ export default function SignIn() {
           email: user.email,
           firstName: user.firstName,
           lastName: user.lastName,
-          phoneNumber: user.phoneNumber
+          phoneNumber: user.phoneNumber,
+          address: user.address
         };
         sessionStorage.setItem("userData", JSON.stringify(userData));
         console.log(JSON.stringify(userData))
