@@ -18,7 +18,7 @@ function ShowProduct() {
     useEffect(() => {
         async function fetchProduct() {
             try {
-                const response = await fetch(`http://localhost:10000/products/fetchByName?name=${productName}`);
+                const response = await fetch(`https://grocery-shop-1.onrender.com:10000/products/fetchByName?name=${productName}`);
                 
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -35,7 +35,7 @@ function ShowProduct() {
             try {
                 const userData = JSON.parse(sessionStorage.getItem('userData'));
                 const userId = userData.id;
-                const response = await fetch(`http://localhost:10000/cart/${userId}/${product.id}`);
+                const response = await fetch(`https://grocery-shop-1.onrender.com:10000/cart/${userId}/${product.id}`);
                 
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -90,7 +90,7 @@ function ShowProduct() {
             const userId = userData.id;
             const itemTotal = quantity * product.price;
             console.log(itemTotal);
-            const response = await fetch('http://localhost:10000/cart', {
+            const response = await fetch('https://grocery-shop-1.onrender.com:10000/cart', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
