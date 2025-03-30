@@ -15,7 +15,7 @@ const ProductList = ({ categoryId }) => {
     useEffect(() => {
       const fetchProducts = async () => {
         try {
-          const response = await axios.get(`http://localhost:5000/products/fetchByCategory?category_id=${category_id}`);
+          const response = await axios.get(`http://localhost:10000/products/fetchByCategory?category_id=${category_id}`);
           setProducts(response.data);
         } catch (err) {
           setError('Error fetching products');
