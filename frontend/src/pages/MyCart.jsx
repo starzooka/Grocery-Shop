@@ -34,7 +34,7 @@ function MyCart() {
           navigate('/signIn');
         }
         const userId = userData.id;
-        const response = await fetch(`http://localhost:5000/cart/${userId}`);
+        const response = await fetch(`http://localhost:10000/cart/${userId}`);
 
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -55,7 +55,7 @@ function MyCart() {
       const userData = JSON.parse(sessionStorage.getItem("userData"));
       const userId = userData.id;
       const response = await fetch(
-        `http://localhost:5000/cart/${userId}/${itemId}`,
+        `http://localhost:10000/cart/${userId}/${itemId}`,
         {
           method: "DELETE",
         }
@@ -99,7 +99,7 @@ function MyCart() {
           })),
         };
 
-        const response = await fetch("http://localhost:5000/order", {
+        const response = await fetch("http://localhost:10000/order", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -112,7 +112,7 @@ function MyCart() {
         }
 
         console.log("Items ordered successfully");
-        const del_response = await fetch(`http://localhost:5000/cart/all`, {
+        const del_response = await fetch(`http://localhost:10000/cart/all`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
