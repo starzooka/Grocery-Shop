@@ -26,7 +26,7 @@ export default function MyOrders() {
 
   const fetchOrders = async (userId) => {
     try {
-      const response = await fetch(`http://localhost:10000/order/${userId}`);
+      const response = await fetch(`https://grocery-shop-1.onrender.com:10000/order/${userId}`);
       const data = await response.json();
       setOrders(data);
     } catch (error) {
@@ -38,7 +38,7 @@ export default function MyOrders() {
     const cancelOrder = window.confirm("Do you want to continue with your cancellation?");
     if (cancelOrder) {
       try {
-        const response = await fetch(`http://localhost:10000/order/cancel`, {
+        const response = await fetch(`https://grocery-shop-1.onrender.com:10000/order/cancel`, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
