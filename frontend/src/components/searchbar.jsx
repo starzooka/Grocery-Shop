@@ -47,7 +47,7 @@ const Searchbar = ({ setResults }) => {
   const [input, setInput] = useState("");
 
   const fetchData = (value) => {
-    fetch("http://localhost:5000/products/fetch")
+    fetch("http://localhost:10000/products/fetch")
       .then((response) => response.json())
       .then((json) => {
         const results = json.filter((user) => {
