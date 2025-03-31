@@ -92,7 +92,7 @@ export default function SignUp() {
     }
   
     try {
-      const response = await axios.post("https://grocery-shop-1.onrender.com:10000/insert", {
+      const response = await axios.post("https://grocery-shop-be.onrender.com:10000/insert", {
         firstName,
         lastName,
         email,
