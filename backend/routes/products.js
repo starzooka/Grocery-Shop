@@ -1,16 +1,27 @@
 const express = require('express');
 const router = express.Router();
+require('dotenv').config();
 const mysql = require('mysql2/promise');
 
-// Middleware to create a database connection
 const createConnection = async () => {
-  const db = await mysql.createConnection({
-    host: process.env.HOST,
-    user: process.env.USER,
-    password: process.env.PASSWORD,
-    database: process.env.DATABASE,
-  });
-  return db;
+    try {
+        console.log("Attempting to connect to MySQL...");
+        console.log("DB CONFIG:", process.env.HOST, process.env.USER, process.env.DATABASE);
+
+        const db = await mysql.createConnection({
+            host: process.env.HOST,
+            user: process.env.USER,
+            password: process.env.PASSWORD,
+            database: process.env.DATABASE,
+            port: process.env.PORT || 3306
+        });
+
+        console.log("✅ MySQL Connection Successful!");
+        return db;
+    } catch (error) {
+        console.error("❌ Database Connection Error:", error);
+        throw error;
+    }
 };
 
 // Fetch all products
